@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 const Card = ({ number, onRemove }) => (
@@ -12,18 +12,33 @@ const Card = ({ number, onRemove }) => (
 );
 
 const App = (props) => {
-  const [card, setcard] = useState([]);
+
+  const my_cards = "card";
+  const data = JSON.parse(localStorage.getItem(my_cards));
+
+  const [card, setCard] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem(my_cards , JSON.stringify(card));
+  }, [card]);
+
+  useEffect(() => {
+      setCard(data);
+  }, []);
+
+
+
 
   const cardRemove = (index) => {
     const cardCopy = [...card];
     cardCopy.splice(index, 1);
-    setcard(cardCopy);
+    setCard(cardCopy);
   };
 
   const handleSubmitCardAdd = (e) => {
     const cardCopy = [...card];
     cardCopy.push(Math.floor(Math.random() * 1000));
-    setcard(cardCopy);
+    setCard(cardCopy);
   };
 
   const sortOnClick = () => {
@@ -31,8 +46,9 @@ const App = (props) => {
     cardSort.sort((a, b) => {
       return a - b;
     });
-    setcard(cardSort);
+    setCard(cardSort);
   };
+
   return (
     <>
       <div className="header">

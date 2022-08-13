@@ -30,6 +30,10 @@
   cursor: pointer;
 }
 
+.header button:hover{
+  background-color: cyan;
+}
+
 .main {
   width: 100%;
   min-height: 580px;
